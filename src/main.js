@@ -4,6 +4,9 @@ import './assets/style/index.scss' // Add global style
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios'
+
+axios.defaults.baseURL = 'http://10.0.0.103:65108'
 
 Vue.config.productionTip = false
 
