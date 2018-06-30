@@ -15,6 +15,35 @@ exports.assetsPath = function (_path) {
 exports.cssLoaders = function (options) {
   options = options || {}
 
+  // https://medium.com/hong-kong-tech/use-sass-scss-of-webpack-in-vuejs-8dde3a83611e
+  function resolveResource(fileName) {
+    // Absolute Path
+    return path.resolve(__dirname, '../src/assets/style/' + fileName)
+  }
+
+  function generateSassResourceLoader() {
+    var loaders = [
+      cssLoader,
+      'sass-loader', {
+        loader: 'sass-resources-loader',
+        options: {
+          resources: [
+            resolveResource('mixins/index.scss'),
+            resolveResource('vars/index.scss')
+          ]
+        }
+      }
+    ];
+    if (options.extract) {
+      return ExtractTextPlugin.extract({
+        use: loaders,
+        fallback: 'vue-style-loader'
+      })
+    } else {
+      return ['vue-style-loader'].concat(loaders)
+    }
+  }
+
   const cssLoader = {
     loader: 'css-loader',
     options: {
@@ -59,8 +88,10 @@ exports.cssLoaders = function (options) {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
+    // sass: generateLoaders('sass', { indentedSyntax: true }),
+    // scss: generateLoaders('sass'),
+    sass: generateSassResourceLoader(),
+    scss: generateSassResourceLoader(),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
   }
