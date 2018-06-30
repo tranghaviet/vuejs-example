@@ -10,6 +10,11 @@ axios.defaults.baseURL = 'http://10.0.0.103:65108'
 
 Vue.config.productionTip = false
 
+// Suppress all Vue logs and warnings.
+if (process.env.NODE_ENV === 'production') {
+  Vue.config.silent = true
+}
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
