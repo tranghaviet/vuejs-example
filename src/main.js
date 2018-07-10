@@ -5,6 +5,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import VueSweetalert2 from 'vue-sweetalert2';
+
+Vue.use(VueSweetalert2);
 
 axios.defaults.baseURL = 'http://10.0.0.103:65108'
 
